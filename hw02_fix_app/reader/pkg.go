@@ -12,7 +12,7 @@ import (
 func ReadJSON(filePath string, limit int) ([]types.Employee, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
-		return nil, fmt.Errorf("error opening file: %v", err)
+		return nil, fmt.Errorf("error opening file: %w", err)
 	}
 
 	defer f.Close() // Не забываем закрыть файл после работы
