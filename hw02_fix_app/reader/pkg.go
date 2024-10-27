@@ -3,9 +3,10 @@ package reader
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fixme_my_friend/hw02_fix_app/types"
 	"io"
 	"os"
+
+	"github.com/fixme_my_friend/hw02_fix_app/types"
 )
 
 func ReadJSON(filePath string, limit int) ([]types.Employee, error) {
@@ -18,7 +19,7 @@ func ReadJSON(filePath string, limit int) ([]types.Employee, error) {
 
 	bytes, err := io.ReadAll(f)
 	if err != nil {
-		return nil, fmt.Errorf("error reading file: %v", err)
+		return nil, fmt.Errorf("error reading file: %w", err)
 	}
 
 	// Десериализация JSON в срез структур Employee
@@ -26,7 +27,7 @@ func ReadJSON(filePath string, limit int) ([]types.Employee, error) {
 
 	err = json.Unmarshal(bytes, &data)
 	if err != nil {
-		return nil, fmt.Errorf("error parsing json: %v", err)
+		return nil, fmt.Errorf("error parsing json: %w", err)
 	}
 
 	// Если необходимо ограничить количество записей

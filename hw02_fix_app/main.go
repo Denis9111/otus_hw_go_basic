@@ -23,7 +23,6 @@ func main() {
 
 	staff, err = reader.ReadJSON(path, -1)
 	if err != nil {
-		err = fmt.Errorf("error reading data: %v", path)
 		fmt.Println(err)
 		return
 	}
