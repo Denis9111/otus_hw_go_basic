@@ -1,30 +1,40 @@
 package reader
 
-import	"encoding/json"
-import	"fmt"
-import	"io"
-import	"os"
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
 
-import	"github.com/fixme_my_friend/hw02_fix_app/types"
-
+	"github.com/Denis9111/otus_hw_go_basic/hw02_fix_app/types"
+)
 
 func ReadJSON(filePath string, limit int) ([]types.Employee, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
-		fmt.Printf("Error: %v", err)
+		return nil, fmt.Errorf("error opening file: %w", err)
 	}
 
-	byte, err := io.ReadAll(f)
+	defer f.Close() // Не забываем закрыть файл после работы
+
+	bytes, err := io.ReadAll(f)
 	if err != nil {
-		fmt.Printf("Error: %v", err)
-		return nil, nil
+		return nil, fmt.Errorf("error reading file: %w", err)
 	}
 
+	// Десериализация JSON в срез структур Employee
 	var data []types.Employee
 
 	err = json.Unmarshal(bytes, &data)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing json: %w", err)
+	}
 
-	res := data
+	// Если необходимо ограничить количество записей
+	if limit > 0 && len(data) > limit {
+		data = data[:limit]
+	}
 
-	return res, nil
+	// Возврат данных
+	return data, nil
 }
