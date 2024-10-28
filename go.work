@@ -1,7 +1,7 @@
 go 1.20
 
 use (
-	./fixme_my_friend/hw02_fix_app
+	./hw02_fix_app
 	./hw03_chessboard
 	./hw04_struct_comparator
 	./hw05_shapes
